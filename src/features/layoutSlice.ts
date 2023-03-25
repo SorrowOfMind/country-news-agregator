@@ -1,16 +1,12 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-enum LayoutType {
-  TILES,
-  LIST,
-}
-
 interface LayoutStateInterface {
-  value: LayoutType
+  value: boolean;
 }
 
 const initialState: LayoutStateInterface = {
-  value: LayoutType.TILES,
+  value: true,
 };
 
 export const layoutSlice = createSlice({
@@ -18,7 +14,7 @@ export const layoutSlice = createSlice({
   initialState,
   reducers: {
     switchLayout: (state) => {
-      console.log(state);
+      state.value = !state.value;
     },
   },
 });

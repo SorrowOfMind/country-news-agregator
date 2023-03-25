@@ -2,6 +2,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+}
+
+a {
+    text-decoration: none;
 }
 
 .header-container {
@@ -13,19 +18,29 @@
     box-shadow: 1px -1px 12px 1px rgba(0,0,0,0.63);
     position: fixed;
     top: 0;
+    padding: 0.5em 3em;
 }
 
-.logo-container{
-    padding: 15px;
-   
-}
-
-.logo{
-    margin:0 0 0 15px;
+.logo {
+    margin-bottom: 0 !important;
+    font-family: 'Varela Round', sans-serif;
 }
 
 .logo a {
-   color: black;
+   color: #303c54;
+}
+.logo a span {
+    color: #d2dc13;
+}
+
+.btn-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon{
+    font-size: 1.7em;
 }
 
 .main {
@@ -50,4 +65,20 @@
     display: flex;
     justify-content: space-between;
     align-items: stretch;
+    gap: 1em;
+}
+
+.sidebar {
+    padding: 7em 2em 2em 2em;
+}
+
+.country-entry {
+    color: #fff;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.country-icon {
+    margin-right: 1em;
 }

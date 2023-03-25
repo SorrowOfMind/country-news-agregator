@@ -1,13 +1,25 @@
+import { useEffect } from 'react';
 import { Layout } from 'antd';
-
 import { Route, Routes } from 'react-router-dom';
 
+import { useAppDispatch } from './hooks/reduxHooks';
+import { fetchCountries } from './features/countriesSlice';
 import {
   Header, Sidebar, Home, CountryNews, Page404,
 } from './components';
 import './App.css';
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const promise = dispatch(fetchCountries());
+    return () => {
+      promise.abort();
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="App">
       <Header />

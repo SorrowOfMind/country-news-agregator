@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 
 function Logo() {
   return (
-    <div className="logo-container">
-      <Typography.Title level={2} className="logo">
-        <Link to="/">gnNews</Link>
-      </Typography.Title>
-    </div>
+    <Typography.Title level={2} className="logo">
+      <Link to="/">
+        <span>gn</span>
+        News
+      </Link>
+    </Typography.Title>
   );
 }
 
