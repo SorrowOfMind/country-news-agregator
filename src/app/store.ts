@@ -4,7 +4,6 @@ import { layoutReducer, countriesReducer, newsReducer } from '../features';
 const store = configureStore({
   reducer: {
     layout: layoutReducer,
-    countries: countriesReducer,
     news: newsReducer,
   },
 });

@@ -1,34 +1,25 @@
-import { useEffect } from 'react';
 import { Layout } from 'antd';
 import { Route, Routes } from 'react-router-dom';
 
-import { useAppDispatch } from './hooks/reduxHooks';
-import { fetchCountries } from './features/countriesSlice';
 import {
   Header, Sidebar, Home, CountryNews, Page404,
 } from './components';
+import { COUNTRIES, AVAILABLE_COUNTRIES } from './assets';
 import './App.css';
 
 function App() {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const promise = dispatch(fetchCountries());
-    return () => {
-      promise.abort();
-    };
-  }, [dispatch]);
+  const countriesList = COUNTRIES.filter((country) => AVAILABLE_COUNTRIES.includes(country.code.toLowerCase()));
 
   return (
     <div className="App">
       <Header />
       <main className="main">
-        <Sidebar />
+        <Sidebar countriesList={countriesList} />
         <Layout>
           <div className="content-wrapper">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/country/:countryId" element={<CountryNews />}/>
+              <Route path="/country/:countryId" element={<CountryNews />} />
               <Route path="*" element={<Page404 />} />
             </Routes>
           </div>
