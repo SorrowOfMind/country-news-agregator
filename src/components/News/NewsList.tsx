@@ -2,19 +2,21 @@ import { List, Space, Typography } from 'antd';
 import moment from 'moment';
 
 interface NewsListInterface {
+  id: string,
   title: string,
   source: string,
   date: string,
+  handleClick: (id: string) => void;
 }
 
-function NewsList({ newsData }: NewsListInterface) {
+function NewsList({ newsData, handleClick }: NewsListInterface) {
   return (
-    // console.log("list", newsData)
+
     <List
       bordered
       dataSource={newsData}
       renderItem={(news, idx) => (
-        <List.Item>
+        <List.Item onClick={() => handleClick(news.id)}>
           <List.Item.Meta
             title={`${idx + 1}. ${news.title}`}
           />

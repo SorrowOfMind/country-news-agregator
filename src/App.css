@@ -70,7 +70,7 @@ a {
 }
 
 .sidebar {
-    padding: 7em 2em 2em 2em;
+    padding: 5em 2em 2em 2em;
 }
 
 .country-entry {
@@ -89,8 +89,10 @@ a {
 }
 
 .news-card{
+    /* max-width: 400px; */
     min-width: 250px;
 }
 .news-image{
-    width:35px;
+    max-height: 200px;
+    object-fit: fill;
 }

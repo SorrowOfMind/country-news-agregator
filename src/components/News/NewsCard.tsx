@@ -1,33 +1,28 @@
 import { Card, Col } from 'antd';
+import moment from 'moment';
 
 interface NewsCardInterface {
+  id: string,
   title: string,
   source: string,
   date: string,
   img: string | null,
   desc: string | null,
+  handleClick: (id: string) => void;
 }
 
 function NewsCard({
-  title, source, date, img, desc,
+  id, title, source, date, img, desc, handleClick,
 }: NewsCardInterface) {
   return (
-    <Col xs={24} sm={12} lg={6} className="news-card">
+    <Col xs={{ span: 24 }} sm={{ span: 12 }} lg={{ span: 6 }} className="news-card">
       <Card
-        title={title}
-        extra={<img className="news-image" src={img} />}
         hoverable
+        cover={<img className="news-image" src={img} alt=''/>}
+        onClick={() => handleClick(id)}
       >
+        <Card.Meta title={title} description={`${source} ${moment(date).format('LL')}`} />
         <p>
-          Source:
-          {source}
-        </p>
-        <p>
-          Published At:
-          {date}
-        </p>
-        <p>
-          Summary:
           {desc}
         </p>
       </Card>

@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Row } from 'antd';
+/* eslint-disable max-len */
+import { useCallback, useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { Modal, Row, Divider  } from 'antd';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { fetchNews } from '../../features/newsSlice';
@@ -8,11 +9,21 @@ import NewsCard from './NewsCard';
 import NewsList from './NewsList';
 
 function CountryNews() {
-  const [currentArticle, setCurrentArticle] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [currentArticle, setCurrentArticle] = useState<any>();
   const { countryId } = useParams();
   const dispatch = useAppDispatch();
   const countryNews = useAppSelector((state) => state.news.news[countryId as string]);
   const isTiled = useAppSelector((state) => state.layout.value);
+
+  const findCurrentArticle = useCallback((id: string) => {
+    const article = countryNews.find((news) => news.id === id);
+    if (article !== undefined) {
+      setCurrentArticle(article);
+    }
+  }, [countryNews]);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     if (countryNews === undefined) {
@@ -23,23 +34,47 @@ function CountryNews() {
     }
   }, [countryId, dispatch, countryNews]);
 
+  const handleClick = (id: string) => {
+    findCurrentArticle(id);
+    openModal();
+  };
+
   return (
-    isTiled
-      ? (
-        <Row gutter={[30, 30]} className="card-container">
-          {countryNews?.map((news, idx) => (
-            <NewsCard
-              key={idx}
-              title={news.title}
-              source={news.source.name}
-              date={news.publishedAt}
-              img={news.urlToImage}
-              desc={news.description}
-            />
-          ))}
-        </Row>
-      )
-      : <NewsList newsData={countryNews}/>
+    <>
+      {
+        isTiled
+          ? (
+            <Row gutter={[30, 30]} className="card-container">
+              {countryNews?.map((news) => (
+                <NewsCard
+                  key={news.id}
+                  id={news.id}
+                  title={news.title}
+                  source={news.source.name}
+                  date={news.publishedAt}
+                  img={news.urlToImage}
+                  desc={news.description}
+                  handleClick={handleClick}
+                />
+              ))}
+            </Row>
+          )
+          : <NewsList newsData={countryNews} handleClick={handleClick} />
+      }
+      <Modal
+        title={currentArticle?.title}
+        open={isModalOpen}
+        onCancel={closeModal}
+        cancelButtonProps={{ style: { display: 'none' } }}
+        okButtonProps={{ style: { display: 'none' } }}
+      >
+        <p>Author: {currentArticle?.author}</p>
+        <Divider />
+        <p>{currentArticle?.content}</p>
+        <Link to={currentArticle?.url}>Source</Link>
+      </Modal>
+    </>
+
   );
 }
 

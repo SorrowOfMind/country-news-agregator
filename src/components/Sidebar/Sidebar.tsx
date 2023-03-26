@@ -6,14 +6,14 @@ interface Country {
 }
 
 interface SidebarProps {
-  countriesList: Country[]
+  countries: Country[]
 }
 
-function Sidebar({ countriesList }: SidebarProps) {
+function Sidebar({ countries }: SidebarProps) {
   return (
     <section className="sidebar">
-      {countriesList.length > 0
-        && countriesList.map((country) => (
+      {countries.length > 0
+        && countries.map((country) => (
           <CountryEntry key={country.code} name={country.name} code={country.code} />
         ))}
     </section>

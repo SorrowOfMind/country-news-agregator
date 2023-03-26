@@ -1,6 +1,8 @@
+/* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 
 const BASE_URL = 'https://newsapi.org/v2/top-headlines';
 const KEY = import.meta.env.VITE_NEWS_API_KEY;
@@ -9,9 +11,9 @@ export const fetchNews = createAsyncThunk('news/fetchNews', async (countryId: st
   try {
     const uri = `${BASE_URL}?country=${countryId}&apiKey=${KEY}`;
     const response = await axios.get(uri);
+    const articles = response.data.articles.map((article: NewsInterface) => ({ ...article, id: uuidv4() }));
 
-    const newsArray = [countryId, response.data.articles];
-
+    const newsArray = [countryId, articles];
     return newsArray;
   } catch (err: unknown) {
     return thunkAPI.rejectWithValue((err as AxiosError).response?.data);
@@ -19,6 +21,7 @@ export const fetchNews = createAsyncThunk('news/fetchNews', async (countryId: st
 });
 
 interface NewsInterface {
+  id: string;
   source: {
     id: number | null,
     name: string,

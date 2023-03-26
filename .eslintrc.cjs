@@ -25,6 +25,6 @@ module.exports = {
   ],
   rules: {
     'react/react-in-jsx-scope': 0,
-    'disable-next-line': 0,
+    'react/jsx-one-expression-per-line': 0
   },
 };

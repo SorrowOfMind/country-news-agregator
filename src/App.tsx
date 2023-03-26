@@ -8,13 +8,14 @@ import { COUNTRIES, AVAILABLE_COUNTRIES } from './assets';
 import './App.css';
 
 function App() {
-  const countriesList = COUNTRIES.filter((country) => AVAILABLE_COUNTRIES.includes(country.code.toLowerCase()));
+  // eslint-disable-next-line max-len
+  const countries = COUNTRIES.filter((country) => AVAILABLE_COUNTRIES.includes(country.code.toLowerCase()));
 
   return (
     <div className="App">
       <Header />
       <main className="main">
-        <Sidebar countriesList={countriesList} />
+        <Sidebar countries={countries} />
         <Layout>
           <div className="content-wrapper">
             <Routes>
