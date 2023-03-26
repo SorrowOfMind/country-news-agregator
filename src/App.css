@@ -19,6 +19,7 @@ a {
     position: fixed;
     top: 0;
     padding: 0.5em 3em;
+    z-index: 10;
 }
 
 .logo {
@@ -57,8 +58,8 @@ a {
 .content-wrapper {
     flex: 0.8;
     width: 100%;
-    background-color: #ebedef;
-    min-height: 100vh;
+    margin-top: 4em;
+    padding: 2em;
 }
 
 .nav-buttons-wrapper {
@@ -81,4 +82,15 @@ a {
 
 .country-icon {
     margin-right: 1em;
+}
+
+.card-container {
+    min-height: 65vh !important;
+}
+
+.news-card{
+    min-width: 250px;
+}
+.news-image{
+    width:35px;
 }

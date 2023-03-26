@@ -17,8 +17,7 @@ function App() {
     return () => {
       promise.abort();
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="App">
@@ -29,7 +28,7 @@ function App() {
           <div className="content-wrapper">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/country/:countryId" element={<CountryNews />} />
+              <Route path="/country/:countryId" element={<CountryNews />}/>
               <Route path="*" element={<Page404 />} />
             </Routes>
           </div>

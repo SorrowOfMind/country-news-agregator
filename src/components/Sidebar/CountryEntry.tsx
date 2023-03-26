@@ -14,7 +14,7 @@ function CountryEntry({ name, code }: CountryEntryInterface) {
   };
 
   return (
-    <Link to={`country/${code.toLowerCase()}`}>
+    <Link to={`/country/${code.toLowerCase()}`}>
       <div className="country-entry">
         <img
           src={`https://flagsapi.com/${code}/flat/16.png`}

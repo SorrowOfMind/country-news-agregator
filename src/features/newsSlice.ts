@@ -9,7 +9,10 @@ export const fetchNews = createAsyncThunk('news/fetchNews', async (countryId: st
   try {
     const uri = `${BASE_URL}?country=${countryId}&apiKey=${KEY}`;
     const response = await axios.get(uri);
-    console.log(response);
+
+    const newsArray = [countryId, response.data.articles];
+
+    return newsArray;
   } catch (err: unknown) {
     return thunkAPI.rejectWithValue((err as AxiosError).response?.data);
   }
@@ -30,13 +33,13 @@ interface NewsInterface {
 }
 
 export interface NewsStateInterface {
-  news: NewsInterface[],
+  news: { [key: string] : NewsInterface },
   loading: 'idle' | 'pending' | 'succeeded' | 'failed',
   error: string | undefined,
 }
 
 const initialState: NewsStateInterface = {
-  news: [],
+  news: {},
   loading: 'idle',
   error: '',
 };
@@ -49,9 +52,11 @@ const newsSlice = createSlice({
     builder.addCase(fetchNews.pending, (state) => {
       state.loading = 'pending';
     });
-    builder.addCase(fetchNews.fulfilled, (state, action) => {
+    builder.addCase(fetchNews.fulfilled, (state, { payload }) => {
       state.loading = 'succeeded';
-      state.news.push(...action.payload.articles);
+      const key = payload[0]; // country code
+      const values = payload[1]; // actual news
+      state.news[key] = values;
     });
     builder.addCase(fetchNews.rejected, (state, action) => {
       state.loading = 'failed';

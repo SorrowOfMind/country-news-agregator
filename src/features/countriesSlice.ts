@@ -2,6 +2,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 
+import AVAILABLE_COUNTRIES from '../assets/coutryCodes';
+
 const config = {
   headers: {
     'X-RapidAPI-Key': import.meta.env.VITE_COUNTRIES_API_KEY,
@@ -48,7 +50,11 @@ const countriesSlice = createSlice({
     });
     builder.addCase(fetchCountries.fulfilled, (state, action) => {
       state.loading = 'succeeded';
-      state.countries.push(...action.payload.country);
+      // state.countries.push(...action.payload.country);
+      state.countries.push(
+        ...action.payload.country
+          .filter((ctry: CountryInterface) => AVAILABLE_COUNTRIES.includes(ctry.iso.toLowerCase())),
+      );
     });
     builder.addCase(fetchCountries.rejected, (state, action) => {
       state.loading = 'failed';
