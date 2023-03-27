@@ -6,7 +6,6 @@ const useNewsCount = () => {
     if (key !== '') {
       return state.news.news[key].length;
     }
-    return null;
   });
 
   return count;

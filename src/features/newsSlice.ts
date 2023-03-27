@@ -20,7 +20,7 @@ export const fetchNews = createAsyncThunk('news/fetchNews', async (countryId: st
   }
 });
 
-interface NewsInterface {
+export interface NewsInterface {
   id: string;
   source: {
     id: number | null,
@@ -36,7 +36,7 @@ interface NewsInterface {
 }
 
 export interface NewsStateInterface {
-  news: { [key: string] : NewsInterface },
+  news: { [key: string] : NewsInterface[] },
   currentCountry: string,
   loading: 'idle' | 'pending' | 'succeeded' | 'failed',
   error: string | undefined,

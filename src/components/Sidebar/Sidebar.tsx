@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import CountryEntry from './CountryEntry';
 
 interface Country {
@@ -13,9 +14,7 @@ function Sidebar({ countries }: SidebarProps) {
   return (
     <section className="sidebar">
       {countries.length > 0
-        && countries.map((country) => (
-          <CountryEntry key={country.code} name={country.name} code={country.code} />
-        ))}
+        && countries.map((country) => <CountryEntry key={country.code} name={country.name} code={country.code} />)}
     </section>
   );
 }

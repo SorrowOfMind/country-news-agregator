@@ -1,10 +1,11 @@
 import type { PaginationProps } from 'antd';
 import { useState, useCallback, useEffect } from 'react';
 import useNewsCount from './useNewsCount';
+import { NewsInterface } from '../features';
 
-const usePagination = (countryNews) => {
+const usePagination = (countryNews: NewsInterface[]) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [currentCollection, setCurrentCollection] = useState(null);
+  const [currentCollection, setCurrentCollection] = useState<NewsInterface[]>();
   const count = useNewsCount();
 
   useEffect(() => {
@@ -14,10 +15,10 @@ const usePagination = (countryNews) => {
     return () => setCurrentPage(1);
   }, [countryNews]);
 
-  const splitCollection = useCallback((page: any) => {
+  const splitCollection = useCallback((page: number) => {
     const lastIndex = page * 20;
     const firstIndex = lastIndex - 20;
-    const splitArr = countryNews.slice(firstIndex, lastIndex);
+    const splitArr = countryNews?.slice(firstIndex, lastIndex);
     setCurrentCollection(splitArr);
   }, [countryNews]);
 

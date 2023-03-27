@@ -1,30 +1,25 @@
+/* eslint-disable max-len */
 import { Card, Col } from 'antd';
 import moment from 'moment';
 import placeholderImg from '../../assets/photo_placeholder.png';
+import { NewsInterface } from '../../features';
 
 interface NewsCardInterface {
-  id: string,
-  title: string,
-  source: string,
-  date: string,
-  img: string | null,
-  desc: string | null,
+  news: NewsInterface,
   handleClick: (id: string) => void;
 }
 
-function NewsCard({
-  id, title, source, date, img, desc, handleClick,
-}: NewsCardInterface) {
+function NewsCard({ news: { id, title, source, publishedAt, urlToImage, description }, handleClick }: NewsCardInterface) {
   return (
     <Col xs={{ span: 24 }} sm={{ span: 12 }} lg={{ span: 6 }} className="news-card">
       <Card
         hoverable
-        cover={<img className="news-image" src={img !== null ? img : placeholderImg} alt=''/>}
+        cover={<img className="news-image" src={urlToImage ?? placeholderImg} alt="" />}
         onClick={() => handleClick(id)}
       >
-        <Card.Meta title={title} description={`${source} ${moment(date).format('LL')}`} />
+        <Card.Meta title={title} description={`${source} ${moment(publishedAt).format('LL')}`} />
         <p>
-          {desc}
+          {description}
         </p>
       </Card>
     </Col>

@@ -3,10 +3,9 @@ import { RiLayoutGridFill } from 'react-icons/ri';
 import { MdTableRows } from 'react-icons/md';
 import { IoSkullSharp } from 'react-icons/io5';
 
-import { switchLayout } from '../../features/layoutSlice';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { switchLayout } from '../../features';
+import { useAppDispatch, useAppSelector, useModal } from '../../hooks';
 import Logo from './Logo';
-import useModal from '../../hooks/useModal';
 
 function Header() {
   const { isModalOpen, openModal, closeModal } = useModal(false);

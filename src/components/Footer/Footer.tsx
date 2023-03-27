@@ -1,5 +1,4 @@
-import useClock from '../../hooks/useClock';
-import useNewsCount from '../../hooks/useNewsCount';
+import { useClock, useNewsCount } from '../../hooks';
 
 function Footer() {
   const time = useClock();
@@ -7,7 +6,7 @@ function Footer() {
 
   return (
     <footer className="footer">
-      <div className="count-wrapper">Number of articles: {count}</div>
+      <div className="count-wrapper">News Total: {count}</div>
       <div className="clock-wrapper">{time}</div>
     </footer>
   );
