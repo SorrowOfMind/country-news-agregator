@@ -9,7 +9,7 @@ const KEY = import.meta.env.VITE_NEWS_API_KEY;
 
 export const fetchNews = createAsyncThunk('news/fetchNews', async (countryId: string, thunkAPI) => {
   try {
-    const uri = `${BASE_URL}?country=${countryId}&apiKey=${KEY}`;
+    const uri = `${BASE_URL}?country=${countryId}&pageSize=100&apiKey=${KEY}`;
     const response = await axios.get(uri);
     const articles = response.data.articles.map((article: NewsInterface) => ({ ...article, id: uuidv4() }));
 
@@ -37,12 +37,14 @@ interface NewsInterface {
 
 export interface NewsStateInterface {
   news: { [key: string] : NewsInterface },
+  currentCountry: string,
   loading: 'idle' | 'pending' | 'succeeded' | 'failed',
   error: string | undefined,
 }
 
 const initialState: NewsStateInterface = {
   news: {},
+  currentCountry: '',
   loading: 'idle',
   error: '',
 };
@@ -50,7 +52,11 @@ const initialState: NewsStateInterface = {
 const newsSlice = createSlice({
   name: 'news',
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentCountry: (state, action) => {
+      state.currentCountry = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchNews.pending, (state) => {
       state.loading = 'pending';
@@ -60,6 +66,7 @@ const newsSlice = createSlice({
       const key = payload[0]; // country code
       const values = payload[1]; // actual news
       state.news[key] = values;
+      state.currentCountry = key;
     });
     builder.addCase(fetchNews.rejected, (state, action) => {
       state.loading = 'failed';
@@ -68,4 +75,5 @@ const newsSlice = createSlice({
   },
 });
 
+export const { setCurrentCountry } = newsSlice.actions;
 export default newsSlice.reducer;

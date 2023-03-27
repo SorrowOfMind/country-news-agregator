@@ -1,6 +1,6 @@
 import { Card, Col } from 'antd';
 import moment from 'moment';
-import placeholderImg from '../../assets/photo_placeholder.png'
+import placeholderImg from '../../assets/photo_placeholder.png';
 
 interface NewsCardInterface {
   id: string,

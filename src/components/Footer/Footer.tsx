@@ -1,13 +1,14 @@
-import moment from 'moment';
 import useClock from '../../hooks/useClock';
+import useNewsCount from '../../hooks/useNewsCount';
 
 function Footer() {
-    const time = useClock();
+  const time = useClock();
+  const count = useNewsCount();
 
   return (
     <footer className="footer">
-      footer
-      {time}
+      <div className="count-wrapper">Number of articles: {count}</div>
+      <div className="clock-wrapper">{time}</div>
     </footer>
   );
 }

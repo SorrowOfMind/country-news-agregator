@@ -1,4 +1,6 @@
 import layoutReducer from './layoutSlice';
-import newsReducer from './newsSlice';
+import newsReducer, { setCurrentCountry, fetchNews } from './newsSlice';
 
-export { layoutReducer, newsReducer };
+export {
+  layoutReducer, newsReducer, setCurrentCountry, fetchNews,
+};

@@ -1,13 +1,14 @@
 /* eslint-disable max-len */
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Modal, Row, Divider  } from 'antd';
+import { Modal, Row, Divider, Pagination } from 'antd';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import { fetchNews } from '../../features/newsSlice';
+import { fetchNews, setCurrentCountry } from '../../features';
 import NewsCard from './NewsCard';
 import NewsList from './NewsList';
 import useModal from '../../hooks/useModal';
+import usePagination from '../../hooks/usePagination';
 
 function CountryNews() {
   const { isModalOpen, openModal, closeModal } = useModal(false);
@@ -16,13 +17,16 @@ function CountryNews() {
   const dispatch = useAppDispatch();
   const countryNews = useAppSelector((state) => state.news.news[countryId as string]);
   const isTiled = useAppSelector((state) => state.layout.value);
+  const {
+    currentPage, currentCollection, count, handlePageChange,
+  } = usePagination(countryNews);
 
   const findCurrentArticle = useCallback((id: string) => {
-    const article = countryNews.find((news) => news.id === id);
+    const article = currentCollection?.find((news) => news.id === id);
     if (article !== undefined) {
       setCurrentArticle(article);
     }
-  }, [countryNews]);
+  }, [currentCollection]);
 
   useEffect(() => {
     if (countryNews === undefined) {
@@ -31,6 +35,7 @@ function CountryNews() {
         promise.abort();
       };
     }
+    dispatch(setCurrentCountry(countryId));
   }, [countryId, dispatch, countryNews]);
 
   const handleClick = (id: string) => {
@@ -44,7 +49,7 @@ function CountryNews() {
         isTiled
           ? (
             <Row gutter={[30, 30]} className="card-container">
-              {countryNews?.map((news) => (
+              {currentCollection?.map((news) => (
                 <NewsCard
                   key={news.id}
                   id={news.id}
@@ -58,8 +63,14 @@ function CountryNews() {
               ))}
             </Row>
           )
-          : <NewsList newsData={countryNews} handleClick={handleClick} />
+          : <NewsList newsData={currentCollection} handleClick={handleClick} />
       }
+      <Pagination
+        current={currentPage}
+        onChange={handlePageChange}
+        total={count}
+        defaultPageSize={20}
+      />
       <Modal
         open={isModalOpen}
         onCancel={closeModal}
