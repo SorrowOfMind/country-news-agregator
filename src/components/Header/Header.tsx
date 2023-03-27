@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Button, Modal } from 'antd';
 import { RiLayoutGridFill } from 'react-icons/ri';
 import { MdTableRows } from 'react-icons/md';
@@ -7,15 +6,14 @@ import { IoSkullSharp } from 'react-icons/io5';
 import { switchLayout } from '../../features/layoutSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import Logo from './Logo';
+import useModal from '../../hooks/useModal';
 
 function Header() {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { isModalOpen, openModal, closeModal } = useModal(false);
   const dispatch = useAppDispatch();
   const layout = useAppSelector((state) => state.layout.value);
 
   const handleLayout = () => dispatch(switchLayout());
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
 
   return (
     <header className="header-container">

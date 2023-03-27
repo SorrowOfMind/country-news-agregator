@@ -2,7 +2,7 @@ import { Layout } from 'antd';
 import { Route, Routes } from 'react-router-dom';
 
 import {
-  Header, Sidebar, Home, CountryNews, Page404,
+  Header, Sidebar, Home, CountryNews, Page404, Footer,
 } from './components';
 import { COUNTRIES, AVAILABLE_COUNTRIES } from './assets';
 import './App.css';
@@ -24,6 +24,7 @@ function App() {
               <Route path="*" element={<Page404 />} />
             </Routes>
           </div>
+          <Footer />
         </Layout>
       </main>
     </div>

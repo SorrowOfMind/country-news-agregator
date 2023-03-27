@@ -1,5 +1,6 @@
 import { Card, Col } from 'antd';
 import moment from 'moment';
+import placeholderImg from '../../assets/photo_placeholder.png'
 
 interface NewsCardInterface {
   id: string,
@@ -18,7 +19,7 @@ function NewsCard({
     <Col xs={{ span: 24 }} sm={{ span: 12 }} lg={{ span: 6 }} className="news-card">
       <Card
         hoverable
-        cover={<img className="news-image" src={img} alt=''/>}
+        cover={<img className="news-image" src={img !== null ? img : placeholderImg} alt=''/>}
         onClick={() => handleClick(id)}
       >
         <Card.Meta title={title} description={`${source} ${moment(date).format('LL')}`} />

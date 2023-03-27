@@ -7,9 +7,10 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { fetchNews } from '../../features/newsSlice';
 import NewsCard from './NewsCard';
 import NewsList from './NewsList';
+import useModal from '../../hooks/useModal';
 
 function CountryNews() {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { isModalOpen, openModal, closeModal } = useModal(false);
   const [currentArticle, setCurrentArticle] = useState<any>();
   const { countryId } = useParams();
   const dispatch = useAppDispatch();
@@ -22,8 +23,6 @@ function CountryNews() {
       setCurrentArticle(article);
     }
   }, [countryNews]);
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     if (countryNews === undefined) {
@@ -62,7 +61,6 @@ function CountryNews() {
           : <NewsList newsData={countryNews} handleClick={handleClick} />
       }
       <Modal
-        title={currentArticle?.title}
         open={isModalOpen}
         onCancel={closeModal}
         cancelButtonProps={{ style: { display: 'none' } }}
@@ -70,7 +68,7 @@ function CountryNews() {
       >
         <p>Author: {currentArticle?.author}</p>
         <Divider />
-        <p>{currentArticle?.content}</p>
+        <p>{currentArticle?.content !== null}</p>
         <Link to={currentArticle?.url}>Source</Link>
       </Modal>
     </>
